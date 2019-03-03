@@ -1,24 +1,26 @@
 
 
-var size = 5;
+var size = 4;
 
 
 class Block {
 	constructor(value) {
 		this.value = value;
 		this.canCombine = true;
-
-
 	}
 }
 
 var matrix = []
-for (var y = 0; y < size; y ++) {
-	matrix.push([]);
-	for (var x = 0; x < size; x ++) {
-		matrix[y].push(new Block(0));
-	}
-}
+// for (var y = 0; y < size; y ++) {
+// 	matrix.push([]);
+// 	for (var x = 0; x < size; x ++) {
+// 		matrix[y].push(new Block(0));
+// 	}
+// }
+matrix = [[new Block(0), new Block(0), new Block(0), new Block(0)],
+			[new Block(0), new Block(0), new Block(0), new Block(0)],
+			[new Block(0), new Block(0), new Block(0), new Block(0)],
+			[new Block(2), new Block(2), new Block(2), new Block(2)]]
 
 
 function rd (lowerBound, upperBound) {
@@ -53,8 +55,9 @@ function avaliableSquares() {
 	if (result.length === 0) {
 		console.log('you lose!')
 		console.log(result);
-		ctx.clearRect(0, 0, canvas.width, canvas.height);
+
 		ctx.font = "100px Arial";
+		ctx.fillStyle = '#FF00FF';
 		ctx.fillText('You lost!', canvas.width / 2, canvas.height / 2);
 		clearInterval(timer);
 		return;
@@ -71,7 +74,8 @@ function spawnBlock() {
 
 	var chosenX = chosenOne[0];
 	var chosenY = chosenOne[1];
-	matrix[chosenY][chosenX].value = rd(0, 3) === 0 ? 4 : 2;
+	// matrix[chosenY][chosenX].value = rd(0, 3) === 0 ? 4 : 2; //hard
+	matrix[chosenY][chosenX].value = 2 //easy
 }
 
 function swap(x1, y1, x2, y2) {
@@ -167,14 +171,6 @@ function setCombine(value) {
 }
 
 
-matrix[rd(0, 3)][rd(0, 3)].value = 2;
-
-
-pMatrix();
-
-moveDown();
-pMatrix();
-
 //playing in the console
 function play() {
 	pMatrix();
@@ -219,7 +215,7 @@ function nextFrame() {
 	}
 	for (var y = 0; y < size; y ++) {
 		for (var x = 0; x < size; x ++) {
-			var gridSize = 100;
+			var gridSize = 200;
 			ctx.fillStyle = '#333333';
 			drawBorder(x * gridSize, y * gridSize, gridSize, gridSize, 
 				thickness = 10);
@@ -240,7 +236,6 @@ function nextFrame() {
 
 	}
 
-
 }
 
 function keyCode(event) {
@@ -258,6 +253,12 @@ function keyCode(event) {
 
 	pMatrix();
 	setCombine(true);
+
+	function sleep(ms) {
+	  return new Promise(resolve => setTimeout(resolve, ms));
+	}
+
+	sleep(2000);
 }
 
 var canvas = document.getElementById("game");
